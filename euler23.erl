@@ -9,17 +9,29 @@
 -module(euler23).
 -compile(export_all).
 
-divisor(1,_Divisor,Result) ->
-     gb_sets:to_list(gb_sets:from_list(Result));
-divisor(N,Divisor,Result) when N rem Divisor =:= 0 ->
-    divisor(N div Divisor,Divisor,Result++lists:map(fun(X)->X*Divisor end, Result) ++[Divisor]);
-divisor(N,Divisor,Result) when N rem Divisor =/= 0 ->
-    divisor(N,Divisor+1,Result).
+exceed(N)->
+    lists:sum(lists:filter(fun(X)-> N rem X =:= 0 end,lists:seq(1,N div 2))).
 
-excessive_number(N)->
-    lists:foldl(fun(X,Sum)->Sum+X end,0,lists:subtract(divisor(N,2,[1]),[N])) > N.
+
+get(Key,Dict)->
+   case dict:find(Key,Dict) of
+       {ok,_} ->
+           Key;
+       error ->
+           0
+   end.
+       
 
 find()->
-    Excessive_number = lists:filter(fun excessive_number/1,lists:seq(12,28123)),
-          
-          
+    find(lists:seq(1,28123),[],dict:new(),0).
+
+find([],_ExceedNums,_Dict,Sum)->
+    Sum;
+find([H|T],Ex,Dict,Sum)->
+    case exceed(H) > H of
+        true ->
+          Dict2 = lists:foldl(fun(X,Dic)-> dict:append(X+H,X+H,Dic) end,Dict,Ex++[H]),
+          find(T,Ex++[H],Dict2,Sum+get(H,Dict2));
+        false ->
+            find(T,Ex,Dict,Sum+get(H,Dict))
+    end.
