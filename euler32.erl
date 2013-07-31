@@ -10,14 +10,10 @@
 
 -define(PANDI,"123456789").
 
+-import(combination,[combos/1]).
 -export([find/0]).
 
 find()->
-    find(1,1111,[]).
-find(A,B,L)  ->
-   C= A*B,
-    case lists:sort(integer_to_list(A) ++ integer_to_list(B) ++  integer_to_list(C)) =:= PANDI of
-        find(A+.
-    lists:sort(integer_to_list(39) ++ integer_to_list(186) ++ integer_to_list(7254)) =:= ?PANDI.
+   lists:sum(gb_sets:to_list(gb_sets:from_list([A*B || A <- lists:seq(10,99), B<- lists:seq(100,999), lists:sort(integer_to_list(A) ++ integer_to_list(B) ++ integer_to_list(A*B)) =:= "123456789"]++ [A*B || A <- lists:seq(1,9), B<- lists:seq(1000,9999),length(integer_to_list(A*B)) < 5, lists:sort(integer_to_list(A) ++ integer_to_list(B) ++ integer_to_list(A*B)) =:= "123456789"]))).
     
     

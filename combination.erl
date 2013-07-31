@@ -10,7 +10,7 @@ combos(K, [H|T]) ->
 combos(L) ->
     lists:foldl(
         fun(K, Acc) -> Acc++(combos(K, L)) end,
-        [[]],
+        [],
         lists:seq(1, length(L))
     ).
 

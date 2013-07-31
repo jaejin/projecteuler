@@ -1,0 +1,31 @@
+%%%-------------------------------------------------------------------
+%%% @author desktop <jaejin@ubuntu>
+%%% @copyright (C) 2012, desktop
+%%% @doc
+%%%
+%%% @end
+%%% Created : 29 Apr 2012 by desktop <jaejin@ubuntu>
+%%%-------------------------------------------------------------------
+-module(euler23).
+-compile(export_all).
+
+
+
+exnum(N)->
+    lists:sum(lists:filter(fun(X)-> N rem X =:=0 end,lists:seq(1,N div 2))).
+
+find()->
+    find(lists:seq(1,28122),[],0).
+
+find([],_A,Sum)->
+    Sum;
+find([H|T],Abun,Sum)->
+    R = exnum(H) > H,
+    if
+        R ->
+
+
+abund(Abun,N)->
+    case dict:find(N,Abun) of
+        {ok, [Value]}->
+            dict:append(Value+N

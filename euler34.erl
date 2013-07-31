@@ -16,16 +16,34 @@
 word_to_fact(N) when is_integer(N) ->
     word_to_fact(integer_to_list(N));
 word_to_fact(N) ->
-   list_to_integer(N) == lists:foldl(fun(E,Sum)->
-                        fact(list_to_integer([E])) +Sum end,0,N).
-
-fact(N)->
-    fact(N,1).
-
-fact(1,Result)->
-    Result;
-fact(N,Result) ->
-    fact(N-1,Result*N).
+    Result = fact(lists:max(N)-48) < N,
+    if
+        Result ->
+            list_to_integer(N) == lists:foldl(fun(E,Sum)->
+                                                      fact(list_to_integer([E])) +Sum end,0,N);
+        true ->
+            false
+    end.
+fact(0)->
+    1;
+fact(1)->
+    1;
+fact(2)->
+    2;
+fact(3) ->
+    6;
+fact(4) ->
+    24;
+fact(5) ->
+    120;
+fact(6) ->
+    720;
+fact(7)->
+    5040;
+fact(8) ->
+    40320;
+fact(9) ->
+    362880.
 
 main()->
     lists:foldl(fun(E,Sum)->
@@ -36,4 +54,4 @@ main()->
                             true ->
                                 Sum 
                        end 
-                            end,0,lists:seq(3,2177280)).
+                            end,0,lists:seq(3,50000)).
